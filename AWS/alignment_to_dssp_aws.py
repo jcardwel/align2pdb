@@ -539,10 +539,7 @@ if __name__ == "__main__":
     startTime = datetime.now()
     success = 0
     fail = 0
-    #check_args()
-    #create_directories()
-    #fasta = "/var/www/aln2pdb/aln2pdb/fastas/ENSGT00390000005995_1.fasta.fas"
-    fasta = path
+    fasta = path   # load in uploaded fasta file
     print(fasta)
     results = pd.DataFrame({'A' : []}) # create empty dataframe
     id_mapper = {}
@@ -573,7 +570,6 @@ if __name__ == "__main__":
             tmp = pd.merge(tmp,sifts,how='left',left_on="ref_original_position",right_on="authPos")
             tmp = tmp.replace(to_replace = np.nan, value ="-") 
             results = pd.concat([results,tmp],axis=1)
-        #hits.append(record.ensembl+":"+record.pdbid+":"+record.chain)
 
     results.replace("-",np.nan, regex=True,inplace=True)
     results.to_csv("/var/www/aln2pdb/html/python/output/"+filename.split("/")[-1].split(".fas")[0]+"_dssp.txt",sep="\t",index=False)
@@ -581,15 +577,6 @@ if __name__ == "__main__":
     summarized_results.to_csv("/var/www/aln2pdb/html/python/output/"+filename.split("/")[-1].split(".fas")[0]+"_summarized.txt",sep="\t",index=False)
 
     print("-"*60)
-    #print("Number of hits to PBD:",len(hits))
-    #print(", ".join(hits))
-    #print("Execution time:",(datetime.now() - loopTime))
-    #print("="*60)
-    #success = success+1
-
-            
-    #print("successful runs:",success)
-    #print("null runs:",fail)
     print("Total execution time:",(datetime.now() - startTime))
     
     
